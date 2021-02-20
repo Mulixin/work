@@ -1,4 +1,4 @@
-﻿---
+﻿
 documentclass: extarticle
 fontsize: 14pt
 geometry: margin=1in
@@ -24,11 +24,10 @@ geometry: margin=1in
 #### Ход работы:
 
 1.	Запишем уравнение в scilab, описывающее движение катера, с начальными условиями и построим траекторию движения для двух случаев.
-![](Screenshot\Screenshot_10.png)
-
+![1](Screenshot/Screenshot_10.png)---
 2. Найдем точку пересечения траектории катера и лодки. 
-![](Screenshot\Screenshot_1.png)
-![](Screenshot\Screenshot_2.png)
+![2](Screenshot/Screenshot_1.png)---
+![3](Screenshot/Screenshot_2.png)---
 
 ### Заключение
 Мы решили задачу о погоне и записали ее в scilab.
