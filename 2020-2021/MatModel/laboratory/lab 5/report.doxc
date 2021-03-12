@@ -1,0 +1,92 @@
+<h1 id="цель-работы">Цель работы</h1>
+<p>Изучить модель хищник-жертва</p>
+<h1 id="задание">Задание</h1>
+<ol type="1">
+<li>Построить график зависимости <span class="math inline"><em>x</em></span> от <span class="math inline"><em>y</em></span> и графики функций <span class="math inline"><em>x</em>(<em>t</em>)</span>, <span class="math inline"><em>y</em>(<em>t</em>)</span></li>
+<li>Найти стационарное состояние системы</li>
+</ol>
+<h1 id="выполнение-лабораторной-работы">Выполнение лабораторной работы</h1>
+<h2 id="теоретические-сведения">Теоретические сведения</h2>
+<p>В данной лабораторной работе рассматривается математическая модель системы «Хищник-жертва».</p>
+<p>Рассмотрим базисные компоненты системы. Пусть система имеет <span class="math inline"><em>X</em></span> хищников и <span class="math inline"><em>Y</em></span> жертв. И пусть для этой системы выполняются следующие предположения: (Модель Лотки-Вольтерра) 1. Численность популяции жертв и хищников зависят только от времени (модель не учитывает пространственное распределение популяции на занимаемой территории) 2. В отсутствии взаимодействия численность видов изменяется по модели Мальтуса, при этом число жертв увеличивается, а число хищников падает 3. Естественная смертность жертвы и естественная рождаемость хищника считаются несущественными 4. Эффект насыщения численности обеих популяций не учитывается 5. Скорость роста численности жертв уменьшается пропорционально численности хищников:</p>
+<p><span class="math display">$$
+ \begin{cases}
+  \frac{dx}{dt} = (-ax(t) + by(t)x(t))
+  \\   
+  \frac{dy}{dt} = (cy(t) - dy(t)x(t))
+ \end{cases}
+$$</span></p>
+<p>Параметр <span class="math inline"><em>a</em></span> определяет коэффициент смертности хищников, <span class="math inline"><em>b</em></span> – коэффициент естественного прироста хищников, <span class="math inline"><em>c</em></span> – коэффициент прироста жертв и <span class="math inline"><em>d</em></span> – коэффициент смертности жертв</p>
+<p>В зависимости от этих параметрах система и будет изменяться. Однако следует выделить одно важное состояние системы, при котором не происходит никаких изменений как со стороны хищников, так и со стороны жертв. Это, так называемое, стационарное состояние системы. При нем, как уже было отмечено, изменение численности популяции равно нулю. Следовательно, при отсутствии изменений в системе <span class="math inline">$\frac{dx}{dt} = 0, \frac{dy}{dt} = 0$</span></p>
+<p>Пусть по условию есть хотя бы один хищник и хотя бы одна жертва: <span class="math inline"><em>x</em> &gt; 0, <em>y</em> &gt; 0</span> Тогда стационарное состояние системы определяется следующим образом: <span class="math display">$$
+  x_0=\frac{a}{b}, y_0=\frac{c}{d}
+$$</span></p>
+<h2 id="задача">Задача</h2>
+<p>Для модели «хищник-жертва»:</p>
+<p><span class="math display">$$
+ \begin{cases}
+  \frac{dx}{dt} = (-0.19x(t) + 0.026y(t)x(t))
+  \\   
+  \frac{dy}{dt} = (0.18y(t) - 0.032y(t)x(t))
+ \end{cases}
+$$</span></p>
+<p>Постройте график зависимости численности хищников от численности жертв, а также графики изменения численности хищников и численности жертв при следующих начальных условиях: <span class="math inline"><em>x</em><sub>0</sub> = 3, <em>y</em><sub>0</sub> = 8</span> Найдите стационарное состояние системы</p>
+<pre><code>import numpy as np
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+import math
+
+a = 0.19
+b = 0.026
+c = 0.18
+d = 0.032
+
+y0 = [3, 8]
+
+def syst (y, t):
+    y1, y2 = y
+    return [-a*y1 + b * y1 * y2, c * y2 - d * y1 * y2]
+
+t = np.arange (0, 200, 0.1)
+y = odeint (syst, y0, t)
+y11 = y[:,0]
+y21 = y[:,1]
+
+fig1 = plt.figure (facecolor=&#39;white&#39;)
+plt.plot (t, y11, linewidth = 2)
+plt.ylabel (&quot;x&quot;)
+plt.xlabel (&quot;t&quot;)
+plt.grid (True)
+plt.show ()
+fig1.savefig(&#39;image/01.png&#39;, dpi = 600)
+
+fig2 = plt.figure (facecolor=&#39;white&#39;)
+plt.plot (t, y21, linewidth = 2)
+plt.ylabel (&quot;x&quot;)
+plt.xlabel (&quot;t&quot;)
+plt.grid (True)
+plt.show ()
+fig2.savefig(&#39;image/02.png&#39;, dpi = 600)
+
+fig3 = plt.figure (facecolor=&#39;white&#39;)
+plt.plot (y11, y21, linewidth = 2)
+plt.ylabel (&quot;y&quot;)
+plt.xlabel (&quot;x&quot;)
+plt.grid (True)
+plt.show ()
+fig3.savefig(&#39;image/03.png&#39;, dpi = 600)
+
+print (&quot;Xст = &quot;, a/b)
+print (&quot;Yст = &quot;, c/d)</code></pre>
+<figure>
+<img src="image/01.png" id="fig:001" style="width:70.0%;height:70.0%" alt="График численности хищников от времени" /><figcaption aria-hidden="true">График численности хищников от времени</figcaption>
+</figure>
+<figure>
+<img src="image/02.png" id="fig:002" style="width:70.0%;height:70.0%" alt="График численности жертв от времени" /><figcaption aria-hidden="true">График численности жертв от времени</figcaption>
+</figure>
+<figure>
+<img src="image/03.png" id="fig:003" style="width:70.0%;height:70.0%" alt="График численности хищников от численности жертв" /><figcaption aria-hidden="true">График численности хищников от численности жертв</figcaption>
+</figure>
+<p>Стационарное состояние <span class="math inline"><em>x</em><sub>0</sub> = 7.307692307692308, <em>y</em><sub>0</sub> = 5.625</span></p>
+<h1 id="выводы">Выводы</h1>
+<p>В ходе выполнения лабораторной работы была изучена модель хищник-жертва и построены графики.</p>
